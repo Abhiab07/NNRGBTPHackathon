@@ -85,4 +85,6 @@ entity Stock {
     productId : Association to Product;
     @title:'Quantity'
     qunt: Integer;
+    // @title: 'Count'
+    // num: Integer;
 }

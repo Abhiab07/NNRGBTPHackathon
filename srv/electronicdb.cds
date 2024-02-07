@@ -41,6 +41,10 @@ annotate Electronics.Stock with @(
             Label:'Stock Quantity',
             Value: qunt
         }
+        // {
+        //     Label:'Count',
+        //     Value: num
+        // }
     ],
     UI.FieldGroup #stock :{
         $Type:'UI.FieldGroupType',
@@ -57,6 +61,10 @@ annotate Electronics.Stock with @(
             Label:'Stock Quantity',
             Value:qunt
         }
+        //  {
+        //     Label:'Count',
+        //     Value: num
+        // }
         ],
     },
       UI.Facets:[

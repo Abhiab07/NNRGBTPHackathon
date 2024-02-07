@@ -67,14 +67,13 @@ module.exports = cds.service.impl(function () {
         //         return res;
         //     }
         
-            // for (const course of res) {
-        //         // Fetch the count of students for each course
-        //         const numberOfStudents = await cds.run(
-        //             SELECT.from(BusinessPartner).where({ course_ID: course.ID })
+            // for (const num of res) {
+        //         // Fetch the count of stock for each product
+        //         const num = await cds.run(
+        //             SELECT.from(BusinessPartner).where({ productid_ID: product.ID })
         //         );
-        //         course.numberOfStudents = numberOfStudents.length;
-        //         const bookCount = course.Books.length;
-        //         course.BookCount = bookCount;
+        //         course.num = num.length;
+        //         
         //     }
         
         //     return res;
