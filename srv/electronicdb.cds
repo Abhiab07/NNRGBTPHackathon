@@ -4,18 +4,70 @@ service Electronics {
 
     entity BusinessPartner as projection on db.BusinessPartner;
     entity States as projection on db.States;
-    entity Product as projection on db.Product;
+    entity Product as projection on db.Product{
+         @UI.Hidden : true
+        ID,
+        *
+    };
     entity Store as projection on db.Store{
         @UI.Hidden : true
         ID,
         *
     };
-
+    entity Stock as projection on db.Stock{
+        @UI.Hidden : true
+        ID,
+        *
+    };
 }
 annotate Electronics.BusinessPartner with @odata.draft.enabled ;
 annotate Electronics.Store with @odata.draft.enabled ;
 annotate Electronics.Product with @odata.draft.enabled ;
+annotate Electronics.Stock with @odata.draft.enabled ;
 
+
+
+annotate Electronics.Stock with @(
+    UI.LineItem:[
+        {
+            Label:'Store Id',
+            Value:storeId_ID
+        },
+         {
+            Label:'Product Id',
+            Value:productId_ID
+        },
+        {
+            Label:'Stock Quantity',
+            Value: qunt
+        }
+    ],
+    UI.FieldGroup #stock :{
+        $Type:'UI.FieldGroupType',
+        Data:[
+             {
+            Label:'Store Id',
+            Value:storeId_ID
+        },
+         {
+            Label:'Product Id',
+            Value:productId_ID
+        },
+         {
+            Label:'Stock Quantity',
+            Value:qunt
+        }
+        ],
+    },
+      UI.Facets:[
+        {
+            $Type:'UI.ReferenceFacet',
+            ID:'stockFacet',
+            Label:'StockInfo',
+            Target:'@UI.FieldGroup#stock'
+        },
+    ],
+);
 
 
 annotate Electronics.BusinessPartner with {
@@ -60,7 +112,14 @@ annotate Electronics.BusinessPartner with @(
         },
         {
             Label: 'State',
-            Value: state_description
+            Value: state
+        },
+        {
+            Label: 'Vendor',
+            Value: Is_vendor
+        },{
+            Label: 'Customer',
+            Value: Is_customer
         },
     ],
     UI.FieldGroup #BusinessPartnerInformation : {
@@ -101,6 +160,13 @@ annotate Electronics.BusinessPartner with @(
         {
             Label: 'State',
             Value: state,
+        },
+        {
+            Label: 'Vendor',
+            Value: Is_vendor
+        },{
+            Label: 'Customer',
+            Value: Is_customer
         },
         ]
     },
@@ -182,7 +248,7 @@ annotate Electronics.Store with @(
     UI.Facets           : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'storeFacet',
-        Label : 'store facets',
+        Label : 'Store Info',
         Target: '@UI.FieldGroup#store'
     }, ],
 );
@@ -239,7 +305,7 @@ annotate Electronics.Product with @(
     UI.Facets             : [{
         $Type : 'UI.ReferenceFacet',
         ID    : 'productFacet',
-        Label : 'product facets',
+        Label : 'Product Info',
         Target: '@UI.FieldGroup#product'
     }, ],
 
@@ -291,3 +357,43 @@ annotate Electronics.BusinessPartner with {
     );
 };
 
+annotate Electronics.Stock with {
+    storeId @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Store id',
+            CollectionPath : 'Store',
+            Parameters: [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : storeId_ID,
+                    ValueListProperty : 'ID'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                },
+
+            ]
+        }
+    );
+productId @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Product id',
+            CollectionPath : 'Product',
+            Parameters: [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : productId_ID,
+                    ValueListProperty : 'ID'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'name'
+                },
+
+            ]
+        }
+    );
+}

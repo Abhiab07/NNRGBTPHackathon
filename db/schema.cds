@@ -76,3 +76,13 @@ entity States {
     description:String(20);
     
 }
+
+entity Stock {
+    key ID : UUID;
+    @title:'Store ID'
+    storeId : Association to Store;
+    @title:'Product ID'
+    productId : Association to Product;
+    @title:'Quantity'
+    qunt: Integer;
+}
