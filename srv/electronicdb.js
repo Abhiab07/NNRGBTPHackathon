@@ -1,36 +1,43 @@
 const cds = require('@sap/cds');
 
 function calcDesc(code) {
-    var sta_des;
+    var state_description;
     console.log(code);
     if(code === "TN"){
-        sta_des="TAMIL NADU";
+        state_description="TAMIL NADU";
     }
     else if(code === "TS"){
-        sta_des="TELANGANA";
+        state_description="TELANGANA";
     }
     else if(code === "KN"){
-        sta_des="KARNATAKA";
+        state_description="KARNATAKA";
     }
     else if(code === "KE"){
-        sta_des="KERALA";
+        state_description="KERALA";
     }
     else if(code === "AP"){
-        sta_des="ANDHRA PRADESH";
+        state_description="ANDHRA PRADESH";
     }
-    return sta_des;
+    return state_description;
     
 }
 
 module.exports = cds.service.impl(function () {
 
-    const { Business_partner, States} = this.entities();
+    const { BusinessPartner, Store, States} = this.entities();
 
     
 
 
 
-    this.before(['CREATE'], Business_partner, async(req) => {
+    this.before(['CREATE'], BusinessPartner, async(req) => {
+        state_description = calcDesc(req.data.state);
+        console.log(state_description);
+        req.data.state=state_description;
+    });
+
+    
+    this.before(['CREATE'], Store, async(req) => {
         state_description = calcDesc(req.data.state);
         console.log(state_description);
         req.data.state=state_description;
@@ -50,5 +57,27 @@ module.exports = cds.service.impl(function () {
         states.$count=states.length;
         return states;
     })
+
+    // this.on(['READ'], BusinessPartner, async (req) => {
+    //         const res = await cds.run(req.query);
+            
+        //     if (!Array.isArray(res)) {
+        //         // If 'res' is not an array, handle it accordingly (e.g., log or throw an error)
+        //         console.error("Unexpected response format:", res);
+        //         return res;
+        //     }
+        
+            // for (const course of res) {
+        //         // Fetch the count of students for each course
+        //         const numberOfStudents = await cds.run(
+        //             SELECT.from(BusinessPartner).where({ course_ID: course.ID })
+        //         );
+        //         course.numberOfStudents = numberOfStudents.length;
+        //         const bookCount = course.Books.length;
+        //         course.BookCount = bookCount;
+        //     }
+        
+        //     return res;
+        // });
 
 });

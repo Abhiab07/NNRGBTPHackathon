@@ -4,9 +4,17 @@ service Electronics {
 
     entity BusinessPartner as projection on db.BusinessPartner;
     entity States as projection on db.States;
+    entity Product as projection on db.Product;
+    entity Store as projection on db.Store{
+        @UI.Hidden : true
+        ID,
+        *
+    };
 
 }
 annotate Electronics.BusinessPartner with @odata.draft.enabled ;
+annotate Electronics.Store with @odata.draft.enabled ;
+annotate Electronics.Product with @odata.draft.enabled ;
 
 
 
@@ -52,7 +60,7 @@ annotate Electronics.BusinessPartner with @(
         },
         {
             Label: 'State',
-            Value: state
+            Value: state_description
         },
     ],
     UI.FieldGroup #BusinessPartnerInformation : {
@@ -107,6 +115,158 @@ annotate Electronics.BusinessPartner with @(
       
 ) ;
 
+annotate Electronics.Store with @(
+    UI.LineItem         : [
+        {
+            Label: 'Store Id',
+            Value: store_id
+        },
+        {
+            Label: 'Store name',
+            Value: name
+        },
+        {
+            Label: 'Address 1',
+            Value: add1
+        },
+        {
+            Label: 'Address 2',
+            Value: add2
+        },
+        {
+            Label: 'City',
+            Value: city
+        },
+        {
+            Label: 'State',
+            Value: state
+        },
+        {
+            Label: 'Pin code',
+            Value: PinCode 
+        },
+    ],
+    UI.FieldGroup #store: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Store Id',
+                Value: store_id
+            },
+            {
+                Label: 'Store name',
+                Value: name
+            },
+            {
+                Label: 'Address 1',
+                Value: add1
+            },
+            {
+                Label: 'Address 2',
+                Value: add2
+            },
+            {
+                Label: 'City',
+                Value: city
+            },
+            {
+                Label: 'State',
+                Value: state
+            },
+            {
+                Label: 'Pin code',
+                Value: PinCode
+            },
+        ],
+    },
+    UI.Facets           : [{
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'storeFacet',
+        Label : 'store facets',
+        Target: '@UI.FieldGroup#store'
+    }, ],
+);
+
+
+annotate Electronics.Product with @(
+    UI.LineItem           : [
+        {
+            Label: 'Product id',
+            Value: p_id
+        },
+        {
+            Label: 'Product Name',
+            Value: name
+        },
+        {
+            Label: 'Product Image URL',
+            Value: imageURL
+        },
+        {
+            Label: 'Cost Price',
+            Value: costPrice
+        },
+        {
+            Label: 'Sell Price',
+            Value: sellPrice
+        },
+    ],
+    UI.FieldGroup #product: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Product id',
+                Value: p_id
+            },
+            {
+                Label: 'Product Name',
+                Value: name
+            },
+            {
+                Label: 'Product Image URL',
+                Value: imageURL
+            },
+            {
+                Label: 'Cost Price',
+                Value: costPrice
+            },
+            {
+                Label: 'Sell Price',
+                Value: sellPrice
+            },
+        ],
+    },
+    UI.Facets             : [{
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'productFacet',
+        Label : 'product facets',
+        Target: '@UI.FieldGroup#product'
+    }, ],
+
+);
+
+annotate Electronics.Store with  {
+    state @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'State',
+            CollectionPath: 'States',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: state,
+                    ValueListProperty: 'code'
+                },
+
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'description'
+                },
+            ]
+        }
+    );
+};
+
 
 
 annotate Electronics.BusinessPartner with {
@@ -130,3 +290,4 @@ annotate Electronics.BusinessPartner with {
         }
     );
 };
+

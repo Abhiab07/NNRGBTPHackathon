@@ -26,12 +26,46 @@ entity BusinessPartner : cuid,managed {
     is_gstn_reg : Boolean ;
     @title : 'GSTIN Number'
     gstin_number : String(20) @mandatory;
-    //  @title : ' Are you a vendor'
-    // Is_vendor: Boolean default false;
-    //  @title : 'Are you a customer'
-    // Is_customer: Boolean default false;
+     @title : 'Is Vendor'
+    Is_vendor: Boolean default false;
+     @title : 'Is Customer'
+    Is_customer: Boolean default false;
     
 }
+
+entity Store {
+    key ID: UUID;
+    @title : 'Store ID'
+    store_id :String(10);
+    @title : 'Name'
+    name : String(100);
+    @title : 'Address-1'
+    add1 : String(255);
+    @title : 'Address-2'
+    add2     : String(255);
+    @title : 'City'
+    city         : String(100);
+    @title:'State'
+    state:String(3);
+    virtual state_description : String(10) @Core.Computed;
+    @title : 'PINCode'
+    PinCode : String(10);
+}
+
+entity Product {
+    key ID: UUID;
+    @title : 'Product ID'
+    p_id : String(20); 
+    @title : 'Product Name'
+    name : String(100);
+    @title : 'Image URL' 
+    imageURL : String(255);
+    @title : 'Cost Price'
+    costPrice : String(10); 
+    @title : 'Selling price'
+    sellPrice : String(10); 
+}
+
 
 
 @cds.persistence.skip
