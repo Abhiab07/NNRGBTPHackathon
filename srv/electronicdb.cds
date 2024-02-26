@@ -19,11 +19,17 @@ service Electronics {
         ID,
         *
     };
+    entity Purchase as projection on db.Purchase;
+    entity Items as projection on db.Items;
 }
+
 annotate Electronics.BusinessPartner with @odata.draft.enabled ;
 annotate Electronics.Store with @odata.draft.enabled ;
 annotate Electronics.Product with @odata.draft.enabled ;
 annotate Electronics.Stock with @odata.draft.enabled ;
+annotate Electronics.Purchase with @odata.draft.enabled;
+annotate Electronics.Items with @odata.draft.enabled;
+
 
 
 
@@ -262,7 +268,10 @@ annotate Electronics.Store with @(
 );
 
 
+
 annotate Electronics.Product with @(
+
+
     UI.LineItem           : [
         {
             Label: 'Product id',
@@ -275,6 +284,8 @@ annotate Electronics.Product with @(
         {
             Label: 'Product Image URL',
             Value: imageURL
+            // @Core.IsURL: true,
+            // @Core.MediaType: 'image/jpg'
         },
         {
             Label: 'Cost Price',
@@ -299,6 +310,8 @@ annotate Electronics.Product with @(
             {
                 Label: 'Product Image URL',
                 Value: imageURL
+                // @Core.IsURL: true,
+                // @Core.MediaType: 'image/jpg'
             },
             {
                 Label: 'Cost Price',
@@ -367,6 +380,8 @@ annotate Electronics.BusinessPartner with {
 
 annotate Electronics.Stock with {
     storeId @(
+        Common.Text: storeId.name,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
             Label: 'Store id',
@@ -386,8 +401,11 @@ annotate Electronics.Stock with {
         }
     );
 productId @(
+        Common.Text: productId.name,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
+
             Label: 'Product id',
             CollectionPath : 'Product',
             Parameters: [
@@ -399,6 +417,231 @@ productId @(
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
                     ValueListProperty : 'name'
+                },
+
+            ]
+        }
+    );
+}
+
+annotate Electronics.Items with @(
+    UI.LineItem         : [
+        {
+            Label: 'Store Id',
+            Value: storeId.store_id
+        },
+        {
+            Label: 'Product Id',
+            Value: productId.p_id
+        },
+        {
+            Label: 'Quantity',
+            Value: qnt.qunt
+        },
+        {
+            Label: 'Price',
+            Value: price.sellPrice
+        },
+
+    ],
+
+    UI.FieldGroup #items: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Store Id',
+                Value: storeId_ID
+            },
+            {
+                Label: 'Product Id',
+                Value: productId_ID
+            },
+            {
+                Label: 'Quantity',
+                Value: qnt_ID
+            },
+            {
+                Label: 'Price',
+                Value: price_ID
+            },
+        ],
+    },
+    UI.Facets           : [{
+        $Type : 'UI.ReferenceFacet',
+        ID    : 'itemsFacet',
+        Label : 'items',
+        Target: '@UI.FieldGroup#items',
+    }, ],
+);
+
+annotate Electronics.Purchase with @(
+    UI.LineItem          : [
+        {
+            Label: 'Purchase Order Number',
+            Value: pu_id
+        },
+        {
+            Label: 'Business Partner',
+            Value: bp.name
+        },
+        {
+            Label: 'Product purchase Date',
+            Value: pDate
+        },
+        {
+            Label: 'store id',
+            Value: Items.item.storeId_ID
+        },
+        {
+            Label: 'quantity',
+            Value: Items.item.qnt_ID
+        },
+        {
+            Label: 'Product id',
+            Value: Items.item.productId_ID
+        },
+        {
+            Label: 'Price',
+            Value: Items.item.price_ID
+        },
+    ],
+    UI.FieldGroup #pur: {
+        $Type: 'UI.FieldGroupType',
+        Data : [
+            {
+                Label: 'Purchase Order Number',
+                Value: pu_id
+            },
+            {
+                Label: 'Business Partner',
+                Value: bp.name
+            },
+            {
+                Label: 'Product purchase Date',
+                Value: pDate
+            },
+        ],
+    },
+    UI.Facets            : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'purFacet',
+            Label : 'pur facets',
+            Target: '@UI.FieldGroup#pur'
+        },
+        {
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'itemssFacet',
+            Label : ' facets',
+            Target: 'Items/@UI.LineItem'
+        },
+    ],
+);
+
+
+annotate Electronics.Purchase.Items with @(
+    UI.LineItem :[
+        {
+            Value: item_ID
+        },
+
+    ],
+    UI.FieldGroup #purchitems: {
+        $Type    : 'UI.FieldGroupType',
+        Data     : [
+            {
+                Value: item_ID
+            },
+            
+        ],
+    },
+        UI.Facets: [{
+            $Type : 'UI.ReferenceFacet',
+            ID    : 'puritemsFacet',
+            Label : 'purchaseitems',
+            Target: '@UI.FieldGroup#purchitems',
+        }, ]
+    
+);
+
+annotate Electronics.Items with {
+    storeId  @(
+        Common.Text: storeId.name,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Store id',
+            CollectionPath: 'Store',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: storeId_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
+
+            ]
+        }
+    );
+    productId @(
+        Common.Text: productId.name,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Product id',
+            CollectionPath: 'Product',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: productId_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
+
+            ]
+        }
+    );
+    qnt  @(
+        // Common.Text: ,
+        // Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Quantity',
+            CollectionPath: 'Stock',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: qnt_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'qunt'
+                },
+
+            ]
+        }
+    );
+    price     @(
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Price',
+            CollectionPath: 'Product',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: price_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'sellPrice'
                 },
 
             ]

@@ -26,8 +26,6 @@ module.exports = cds.service.impl(function () {
 
     const { BusinessPartner, Store, States} = this.entities();
 
-    
-
 
 
     this.before(['CREATE'], BusinessPartner, async(req) => {
@@ -35,6 +33,7 @@ module.exports = cds.service.impl(function () {
         console.log(state_description);
         req.data.state=state_description;
     });
+
 
     
     this.before(['CREATE'], Store, async(req) => {
@@ -61,22 +60,23 @@ module.exports = cds.service.impl(function () {
     // this.on(['READ'], BusinessPartner, async (req) => {
     //         const res = await cds.run(req.query);
             
-        //     if (!Array.isArray(res)) {
-        //         // If 'res' is not an array, handle it accordingly (e.g., log or throw an error)
-        //         console.error("Unexpected response format:", res);
-        //         return res;
-        //     }
+    //         if (!Array.isArray(res)) {
+    //             // If 'res' is not an array, handle it accordingly (e.g., log or throw an error)
+    //             console.error("Unexpected response format:", res);
+    //             return res;
+    //         }
         
-            // for (const num of res) {
-        //         // Fetch the count of stock for each product
-        //         const num = await cds.run(
-        //             SELECT.from(BusinessPartner).where({ productid_ID: product.ID })
-        //         );
-        //         course.num = num.length;
-        //         
-        //     }
+    //         for (const num of res) {
+    //             // Fetch the count of stock for each product
+    //             const num = await cds.run(
+    //                 SELECT.from(BusinessPartner).where({ productid_ID: product.ID })
+    //             );
+    //             course.num = num.length;
+                
+    //         }
         
-        //     return res;
-        // });
+
+    //         return res;
+    //     });
 
 });

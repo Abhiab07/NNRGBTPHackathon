@@ -85,6 +85,50 @@ entity Stock {
     productId : Association to Product;
     @title:'Quantity'
     qunt: Integer;
-    // @title: 'Count'
-    // num: Integer;
 }
+
+entity Purchase {
+    key ID :UUID;
+    @title: 'Purchase-id'
+    pu_id : String(10);
+    @title: 'BusinessPartner'
+    bp:Association to BusinessPartner;
+    @title: 'Purchase_Date'
+    pDate :Date;
+    @title: 'Items'
+    Items:Composition of many{
+        key ID : UUID;
+        item : Association to Items;
+    }
+}
+
+
+ entity Items {
+    key ID :UUID;
+    @title: 'Store-ID'
+    storeId : Association to Store;
+    @title: 'Quantity'
+    qnt : Association to Stock;
+    @title: 'Product-ID'
+    productId : Association to Product;
+    @title: 'Price'
+    price : Association to Product;
+}   
+
+
+entity Sales {
+    key ID :UUID;
+    @title: 'Sales-Order-Number'
+    son : Integer;
+    @title: 'Businesspartner'
+    bp : Association to BusinessPartner;
+    @title: 'SalesDate'
+    saleDate : Association to Purchase;
+     @title: 'Items'
+     Items:Composition of many{
+        key ID : UUID;
+        item : Association to Items;
+    }
+}
+
+  
