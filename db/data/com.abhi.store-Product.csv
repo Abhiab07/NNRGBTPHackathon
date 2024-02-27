@@ -1,2 +1,3 @@
 ID,p_id,name,imageURL,costPrice,sellPrice
-0416fd26-9d46-4f2e-8192-38b5b9022264,1001,motor,https://en.wikipedia.org/wiki/File:Servo_Motor.jpg,100,120
+0416fd26-9d46-4f2e-8192-38b5b9022264,1001,motor,https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Servo_Motor.jpg/1087px-Servo_Motor.jpg,100,120
+3197b57f-596f-4745-8eb2-d3d474244c08,1002,aurdinoboard,https://upload.wikimedia.org/wikipedia/commons/3/38/Arduino_Uno_-_R3.jpg,1400,1600

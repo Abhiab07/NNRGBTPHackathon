@@ -31,59 +31,6 @@ annotate Electronics.Purchase with @odata.draft.enabled;
 annotate Electronics.Items with @odata.draft.enabled;
 
 
-
-
-annotate Electronics.Stock with @(
-    UI.LineItem:[
-        {
-            Label:'Store Id',
-            Value:storeId_ID
-        },
-         {
-            Label:'Product Id',
-            Value:productId_ID
-        },
-        {
-            Label:'Stock Quantity',
-            Value: qunt
-        }
-        // {
-        //     Label:'Count',
-        //     Value: num
-        // }
-    ],
-    UI.FieldGroup #stock :{
-        $Type:'UI.FieldGroupType',
-        Data:[
-             {
-            Label:'Store Id',
-            Value:storeId_ID
-        },
-         {
-            Label:'Product Id',
-            Value:productId_ID
-        },
-         {
-            Label:'Stock Quantity',
-            Value:qunt
-        }
-        //  {
-        //     Label:'Count',
-        //     Value: num
-        // }
-        ],
-    },
-      UI.Facets:[
-        {
-            $Type:'UI.ReferenceFacet',
-            ID:'stockFacet',
-            Label:'StockInfo',
-            Target:'@UI.FieldGroup#stock'
-        },
-    ],
-);
-
-
 annotate Electronics.BusinessPartner with {
    pincode     @assert.format: '^[1-9]{1}[0-9]{5}$';
    gstin_number @assert.format:'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}$'
@@ -284,8 +231,6 @@ annotate Electronics.Product with @(
         {
             Label: 'Product Image URL',
             Value: imageURL
-            // @Core.IsURL: true,
-            // @Core.MediaType: 'image/jpg'
         },
         {
             Label: 'Cost Price',
@@ -310,8 +255,6 @@ annotate Electronics.Product with @(
             {
                 Label: 'Product Image URL',
                 Value: imageURL
-                // @Core.IsURL: true,
-                // @Core.MediaType: 'image/jpg'
             },
             {
                 Label: 'Cost Price',
@@ -330,6 +273,48 @@ annotate Electronics.Product with @(
         Target: '@UI.FieldGroup#product'
     }, ],
 
+);
+
+annotate Electronics.Stock with @(
+    UI.LineItem:[
+        {
+            Label:'Store Id',
+            Value:storeId_ID
+        },
+         {
+            Label:'Product Id',
+            Value:productId_ID
+        },
+        {
+            Label:'Stock Quantity',
+            Value: qunt
+        }
+    ],
+    UI.FieldGroup #stock :{
+        $Type:'UI.FieldGroupType',
+        Data:[
+             {
+            Label:'Store Id',
+            Value:storeId_ID
+        },
+         {
+            Label:'Product Id',
+            Value:productId_ID
+        },
+         {
+            Label:'Stock Quantity',
+            Value:qunt
+        }
+        ],
+    },
+      UI.Facets:[
+        {
+            $Type:'UI.ReferenceFacet',
+            ID:'stockFacet',
+            Label:'StockInfo',
+            Target:'@UI.FieldGroup#stock'
+        },
+    ],
 );
 
 annotate Electronics.Store with  {
@@ -377,6 +362,8 @@ annotate Electronics.BusinessPartner with {
         }
     );
 };
+
+
 
 annotate Electronics.Stock with {
     storeId @(
@@ -482,7 +469,7 @@ annotate Electronics.Purchase with @(
         },
         {
             Label: 'Business Partner',
-            Value: bp.name
+            Value: bp_ID
         },
         {
             Label: 'Product purchase Date',
@@ -514,7 +501,7 @@ annotate Electronics.Purchase with @(
             },
             {
                 Label: 'Business Partner',
-                Value: bp.name
+                Value: bp_ID
             },
             {
                 Label: 'Product purchase Date',
@@ -537,6 +524,30 @@ annotate Electronics.Purchase with @(
         },
     ],
 );
+
+annotate Electronics.Purchase with {
+    bp @(
+        Common.Text: bp.name,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList               : {
+            Label         : 'Business Partner',
+            CollectionPath: 'BusinessPartner',
+            Parameters    : [
+                {
+                    $Type            : 'Common.ValueListParameterInOut',
+                    LocalDataProperty: bp_ID,
+                    ValueListProperty: 'ID'
+                },
+                {
+                    $Type            : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty: 'name'
+                },
+
+            ]
+        }
+    );
+};
 
 
 annotate Electronics.Purchase.Items with @(
@@ -608,8 +619,8 @@ annotate Electronics.Items with {
         }
     );
     qnt  @(
-        // Common.Text: ,
-        // Common.TextArrangement: #TextOnly,
+        Common.Text: qnt.qunt,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList               : {
             Label         : 'Quantity',
@@ -629,6 +640,8 @@ annotate Electronics.Items with {
         }
     );
     price     @(
+        Common.Text: price.sellPrice,
+        Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList               : {
             Label         : 'Price',
@@ -647,4 +660,36 @@ annotate Electronics.Items with {
             ]
         }
     );
-}
+};
+
+
+annotate Electronics.Purchase.Items with {
+     item @(
+        Common.Text: item.productId,
+        Common.TextArrangement: #TextOnly,
+        Common.ValueListWithFixedValues: true,
+        Common.ValueList : {
+            Label: 'Items',
+            CollectionPath : 'Items',
+            Parameters: [
+                {
+                    $Type             : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : item_ID,
+                    ValueListProperty : 'ID'
+                },
+                {
+                    $Type             : 'Common.ValueListParameterDisplayOnly',
+                    ValueListProperty : 'productId'
+                },
+            ]
+        }
+    )
+};
+
+
+annotate Electronics.Product with {
+    @Common.Text:'{Product}'
+    @Core.IsURL:true
+    @Core.MediaType:'image/jpg' 
+    imageURL
+};

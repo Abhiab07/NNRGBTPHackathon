@@ -1,2 +1,3 @@
 ID,businesspartner_number,name,address1,address2,city,state,pinCode,gstin_number,is_gstn_reg
-0715062c-1dd1-483d-a34c-08f1c151c89a,234,ABHI, girni gadda, uppal , Hyderabad,TELANGANA,506167,7938023,true
+0715062c-1dd1-483d-a34c-08f1c151c89a,241,ABHI, girni gadda, uppal , Hyderabad,TELANGANA,506167,7938023,true
+994d50ef-c7c2-4a54-906d-73df2ff552e3,242,Bablu, beerappagadda, jangaon,hyderabad,KERALA,567890,122333,false
