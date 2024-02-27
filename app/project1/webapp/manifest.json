@@ -83,7 +83,6 @@
       "css": []
     },
     "routing": {
-      "config": {},
       "routes": [
         {
           "pattern": ":?query:",
@@ -103,12 +102,33 @@
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
+              "initialLoad":"Enabled",
               "contextPath": "/BusinessPartner",
               "variantManagement": "Page",
               "navigation": {
                 "BusinessPartner": {
                   "detail": {
                     "route": "BusinessPartnerObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "BusinessPartherListVen": {
+                      "press": "project1.ext.businessPartherListVen.BusinessPartherListVen.is_Vendor",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": true,
+                      "text": "IS VENDOR "
+                    },
+                    "businessPartherListVen": {
+                      "press": "project1.ext.businessPartherListVen.businessPartherListVen.is_notVen",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": true,
+                      "text": "is_notVen"
+                    }
                   }
                 }
               }

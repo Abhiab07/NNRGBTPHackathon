@@ -618,54 +618,54 @@ annotate Electronics.Items with {
             ]
         }
     );
-    qnt  @(
-        Common.Text: qnt.qunt,
-        Common.TextArrangement: #TextOnly,
-        Common.ValueListWithFixedValues: true,
-        Common.ValueList               : {
-            Label         : 'Quantity',
-            CollectionPath: 'Stock',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: qnt_ID,
-                    ValueListProperty: 'ID'
-                },
-                {
-                    $Type            : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty: 'qunt'
-                },
+    // qnt  @(
+    //     Common.Text: qnt.qunt,
+    //     Common.TextArrangement: #TextOnly,
+    //     Common.ValueListWithFixedValues: true,
+    //     Common.ValueList               : {
+    //         Label         : 'Quantity',
+    //         CollectionPath: 'Stock',
+    //         Parameters    : [
+    //             {
+    //                 $Type            : 'Common.ValueListParameterInOut',
+    //                 LocalDataProperty: qnt_ID,
+    //                 ValueListProperty: 'ID'
+    //             },
+    //             {
+    //                 $Type            : 'Common.ValueListParameterDisplayOnly',
+    //                 ValueListProperty: 'qunt'
+    //             },
 
-            ]
-        }
-    );
-    price     @(
-        Common.Text: price.sellPrice,
-        Common.TextArrangement: #TextOnly,
-        Common.ValueListWithFixedValues: true,
-        Common.ValueList               : {
-            Label         : 'Price',
-            CollectionPath: 'Product',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: price_ID,
-                    ValueListProperty: 'ID'
-                },
-                {
-                    $Type            : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty: 'sellPrice'
-                },
+    //         ]
+    //     }
+    // );
+    // price     @(
+    //     Common.Text: price.sellPrice,
+    //     Common.TextArrangement: #TextOnly,
+    //     Common.ValueListWithFixedValues: true,
+    //     Common.ValueList               : {
+    //         Label         : 'Price',
+    //         CollectionPath: 'Product',
+    //         Parameters    : [
+    //             {
+    //                 $Type            : 'Common.ValueListParameterInOut',
+    //                 LocalDataProperty: price_ID,
+    //                 ValueListProperty: 'ID'
+    //             },
+    //             {
+    //                 $Type            : 'Common.ValueListParameterDisplayOnly',
+    //                 ValueListProperty: 'sellPrice'
+    //             },
 
-            ]
-        }
-    );
+    //         ]
+    //     }
+    // );
 };
 
 
 annotate Electronics.Purchase.Items with {
      item @(
-        Common.Text: item.productId,
+        Common.Text: item.productId.name,
         Common.TextArrangement: #TextOnly,
         Common.ValueListWithFixedValues: true,
         Common.ValueList : {
@@ -675,11 +675,11 @@ annotate Electronics.Purchase.Items with {
                 {
                     $Type             : 'Common.ValueListParameterInOut',
                     LocalDataProperty : item_ID,
-                    ValueListProperty : 'ID'
+                    ValueListProperty : 'productId_ID'
                 },
                 {
                     $Type             : 'Common.ValueListParameterDisplayOnly',
-                    ValueListProperty : 'productId'
+                    ValueListProperty : 'productId.name'
                 },
             ]
         }
@@ -687,9 +687,9 @@ annotate Electronics.Purchase.Items with {
 };
 
 
-annotate Electronics.Product with {
-    @Common.Text:'{Product}'
-    @Core.IsURL:true
-    @Core.MediaType:'image/jpg' 
-    imageURL
-};
+// annotate Electronics.Product with {
+//     @Common.Text:'{Product}'
+//     @Core.IsURL:true
+//     @Core.MediaType:'image/jpg' 
+//     imageURL
+// };
