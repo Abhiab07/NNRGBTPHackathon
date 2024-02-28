@@ -57,26 +57,6 @@ module.exports = cds.service.impl(function () {
         return states;
     })
 
-    // this.on(['READ'], BusinessPartner, async (req) => {
-    //         const res = await cds.run(req.query);
-            
-    //         if (!Array.isArray(res)) {
-    //             // If 'res' is not an array, handle it accordingly (e.g., log or throw an error)
-    //             console.error("Unexpected response format:", res);
-    //             return res;
-    //         }
-        
-    //         for (const num of res) {
-    //             // Fetch the count of stock for each product
-    //             const num = await cds.run(
-    //                 SELECT.from(BusinessPartner).where({ productid_ID: product.ID })
-    //             );
-    //             course.num = num.length;
-                
-    //         }
-        
-
-    //         return res;
-    //     });
+    
 
 });

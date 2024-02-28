@@ -97,12 +97,7 @@ entity Purchase {
     pDate :Date;
     @title: 'Store ID'
     stId : Association to Store;
-    // @title: 'Items'
-  
-    // Items:Composition of many{
-    //     key ID : UUID;
-    //     item : Association to Items;
-    // }
+    @title: 'Items'
     Items:Composition of many {
     key ID :UUID;
     @title: 'Quantity'
@@ -117,14 +112,24 @@ entity Purchase {
 
 
 
-// entity Sales {
-//     key ID :UUID;
-//     @title: 'Sales-Order-Number'
-//     son : Integer;
-//     @title: 'Businesspartner'
-//     bp : Association to BusinessPartner;
-//     @title: 'SalesDate'
-//     saleDate : Association to Purchase;
-// }
+entity Sales {
+    key ID :UUID;
+    @title: 'Sales-Order-Number'
+    son : Integer;
+    @title: 'Businesspartner'
+    bp : Association to BusinessPartner;
+    @title: 'SalesDate'
+    saleDate : Association to Purchase;
+    @title: 'Items'
+    Items:Composition of many {
+    key ID :UUID;
+    @title: 'Quantity'
+    qnt : Integer;
+    @title: 'Product-ID'
+    productId : Association to Product;
+    @title: 'Price'
+    price : Integer;
+    }
+}
 
   
