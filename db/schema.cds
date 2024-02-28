@@ -59,7 +59,7 @@ entity Product {
     @title : 'Product Name'
     name : String(100);
     @title : 'Image URL' 
-    imageURL : String(255);
+    imageURL : String(255) default 'https://cdn.pixabay.com/photo/2017/02/07/02/16/cloud-2044823_1280.png';
     @title : 'Cost Price'
     costPrice : String(10); 
     @title : 'Selling price'
@@ -95,40 +95,36 @@ entity Purchase {
     bp:Association to BusinessPartner;
     @title: 'Purchase_Date'
     pDate :Date;
-    @title: 'Items'
-    Items:Composition of many{
-        key ID : UUID;
-        item : Association to Items;
-    }
-}
-
-
- entity Items {
+    @title: 'Store ID'
+    stId : Association to Store;
+    // @title: 'Items'
+  
+    // Items:Composition of many{
+    //     key ID : UUID;
+    //     item : Association to Items;
+    // }
+    Items:Composition of many {
     key ID :UUID;
-    @title: 'Store-ID'
-    storeId : Association to Store;
     @title: 'Quantity'
-    qnt : Association to Stock;
+    qnt : Integer;
     @title: 'Product-ID'
     productId : Association to Product;
     @title: 'Price'
-    price : Association to Product;
-}   
-
-
-entity Sales {
-    key ID :UUID;
-    @title: 'Sales-Order-Number'
-    son : Integer;
-    @title: 'Businesspartner'
-    bp : Association to BusinessPartner;
-    @title: 'SalesDate'
-    saleDate : Association to Purchase;
-     @title: 'Items'
-     Items:Composition of many{
-        key ID : UUID;
-        item : Association to Items;
+    price : Integer;
     }
 }
+
+
+
+
+// entity Sales {
+//     key ID :UUID;
+//     @title: 'Sales-Order-Number'
+//     son : Integer;
+//     @title: 'Businesspartner'
+//     bp : Association to BusinessPartner;
+//     @title: 'SalesDate'
+//     saleDate : Association to Purchase;
+// }
 
   
